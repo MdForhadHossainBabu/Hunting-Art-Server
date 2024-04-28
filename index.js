@@ -88,6 +88,30 @@ async function run() {
       res.send(result)
     })
 
+    app.put('/craftItem/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedCraft = req.body;
+      const Craft = {
+        $set : {
+          craftName: updatedCraft.craftName,
+          quantity: updatedCraft.quantity,
+          rating: updatedCraft.rating,
+          price: updatedCraft.price,
+          description: updatedCraft.description,
+          processingTime: updatedCraft.processingTime,
+          stockStatus: updatedCraft.stockStatus,
+          userName: updatedCraft.userName,
+          email: updatedCraft.email,
+          category: updatedCraft.category,
+          photo: updatedCraft.photo,
+        },
+      };
+      const result = await myCraftCollection.updateOne(filter, Craft, options);
+      res.send(result)
+    })
+
     app.delete('/craft/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
@@ -96,12 +120,7 @@ async function run() {
     })
    
 
-    // app.patch('/craft', async (req, res) => {
-    //   const id = req.body;
-    //   console.log(id);
-    // })
-
-
+    
     app.get('/craft/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
