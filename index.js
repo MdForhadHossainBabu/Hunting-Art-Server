@@ -31,7 +31,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-   await client.connect();
+   
    
     const craftCollection = client.db('CraftDB').collection('craft');
     const userCollection = client.db('CraftDB').collection('user');
@@ -94,7 +94,7 @@ async function run() {
       const options = { upsert: true };
       const updatedCraft = req.body;
       const Craft = {
-        $set : {
+        $set: {
           craftName: updatedCraft.craftName,
           quantity: updatedCraft.quantity,
           rating: updatedCraft.rating,
